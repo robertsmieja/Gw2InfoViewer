@@ -17,11 +17,8 @@
  */
 package org.gw2InfoViewer;
 
-import java.util.ArrayList;
 import java.awt.EventQueue;
 import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
-import javax.swing.event.MenuEvent;
 import org.gw2InfoViewer.models.Event;
 import org.gw2InfoViewer.models.EventList;
 
@@ -90,6 +87,7 @@ public class MainView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Guild Wars 2 - Info Viewer");
+        setIconImages(null);
 
         eventNameList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Loading..." };
@@ -146,15 +144,6 @@ public class MainView extends javax.swing.JFrame {
         refreshMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 refreshMenuMouseClicked(evt);
-            }
-        });
-        refreshMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                refreshMenuMenuSelected(evt);
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
         });
         mainMenuBar.add(refreshMenu);
