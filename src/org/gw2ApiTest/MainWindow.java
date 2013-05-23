@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package gw2apitest;
+package org.gw2ApiTest;
 
 /**
  *
@@ -32,7 +32,6 @@ public class MainWindow extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         fileMenu.setText("File");
         mainMenuBar.add(fileMenu);
