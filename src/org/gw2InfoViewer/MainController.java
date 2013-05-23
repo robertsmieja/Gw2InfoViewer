@@ -1,3 +1,20 @@
+/*
+ *  Gw2InfoViewer - Java Swing based application that reads the Guild Wars 2 JSON API
+ *  Copyright (C) 2013 Robert Smieja
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.gw2InfoViewer;
 
 import com.google.gson.Gson;
@@ -11,13 +28,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.gw2InfoViewer.controllers.HttpsConnectionManager;
 import org.gw2InfoViewer.models.Event;
+import org.gw2InfoViewer.models.EventList;
+import org.gw2InfoViewer.services.JsonService;
 
 /**
  *
  * @author Robert Smieja
  */
 public class MainController {
-        private static final String API_BASE_URL = "https://api.guildwars2.com/";
+
+    private static final String API_BASE_URL = "https://api.guildwars2.com/";
     private static final String API_VERSION = "v1/";
     private static final String API_EVENTS = "events.json";
     private static final String API_EVENT_NAMES = "event_names.json";
@@ -39,14 +59,14 @@ public class MainController {
     public static void main(String args[]) {
 
         String url = API_BASE_URL + API_VERSION + API_EVENTS + "?world_id=1001";
-        ArrayList<Event> eventArray;
+        EventList eventList;
 
         MainView mainView;
         HttpsConnectionManager connectionManager;
         HttpClient httpClient;
         HttpGet getEvents;
         String responseBody;
-        Gson gson;
+        JsonService jsonService;
 
         /* Set the System look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -61,9 +81,9 @@ public class MainController {
 
         try {
             connectionManager = new HttpsConnectionManager(StartComRootCertificate);
-            eventArray = new ArrayList<Event>();
+//            eventList = new ArrayList<Event>();
             getEvents = new HttpGet(url);
-            gson = new Gson();
+            jsonService = new JsonService();
 
             httpClient = connectionManager.getHttpClient();
             responseBody = HttpsConnectionManager.stringFromHttpResponse(httpClient.execute(getEvents));
@@ -72,9 +92,8 @@ public class MainController {
             Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
-        
-        eventArray = new ArrayList(Arrays.asList(gson.fromJson("[" + responseBody + "]", Event[].class)));
-        
-        mainView.setEventsListModel(responseBody);
+
+        eventList = jsonService.parseEventListJson(responseBody);
+        mainView.setEventsListModel(eventList);
     }
 }
