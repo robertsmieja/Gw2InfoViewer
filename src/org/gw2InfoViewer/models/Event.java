@@ -1,9 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.gw2ApiTest.dataStructures;
-
+package org.gw2InfoViewer.models;
 
 enum eventState {
     ACTIVE, SUCCESS, FAIL, WARMUP, PREPERATION;

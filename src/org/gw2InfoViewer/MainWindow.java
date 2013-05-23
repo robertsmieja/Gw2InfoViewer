@@ -1,4 +1,4 @@
-package org.gw2ApiTest;
+package org.gw2InfoViewer;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -10,8 +10,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.gw2ApiTest.dataStructures.Event;
-import org.gw2ApiTest.util.HttpsConnectionManager;
+import org.gw2InfoViewer.models.Event;
+import org.gw2InfoViewer.controllers.HttpsConnectionManager;
 
 /**
  * Singleton to represent main window
@@ -119,8 +119,9 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         mainTabPane = new javax.swing.JTabbedPane();
-        eventScrollPane = new javax.swing.JScrollPane();
+        eventPane = new javax.swing.JSplitPane();
         eventInfoTextArea = new javax.swing.JTextArea();
+        eventList = new javax.swing.JList();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         editMenu = new javax.swing.JMenu();
@@ -128,15 +129,20 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        eventScrollPane.setName(""); // NOI18N
-
         eventInfoTextArea.setEditable(false);
         eventInfoTextArea.setColumns(20);
         eventInfoTextArea.setRows(5);
         eventInfoTextArea.setText(model);
-        eventScrollPane.setViewportView(eventInfoTextArea);
+        eventPane.setRightComponent(eventInfoTextArea);
 
-        mainTabPane.addTab("Events", eventScrollPane);
+        eventList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        eventPane.setLeftComponent(eventList);
+
+        mainTabPane.addTab("Events", eventPane);
 
         fileMenu.setText("File");
         mainMenuBar.add(fileMenu);
@@ -152,12 +158,12 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         refreshMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
                 refreshMenuMenuSelected(evt);
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
         });
         mainMenuBar.add(refreshMenu);
@@ -188,13 +194,14 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void refreshMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMenuMouseClicked
         eventInfoTextArea.setText(model);
-        //        refreshMenu.set
+        refreshMenu.setSelected(false);
     }//GEN-LAST:event_refreshMenuMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu editMenu;
     private javax.swing.JTextArea eventInfoTextArea;
-    private javax.swing.JScrollPane eventScrollPane;
+    private javax.swing.JList eventList;
+    private javax.swing.JSplitPane eventPane;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JTabbedPane mainTabPane;

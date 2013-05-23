@@ -1,4 +1,4 @@
-package org.gw2ApiTest.util;
+package org.gw2InfoViewer.controllers;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
