@@ -59,6 +59,7 @@ public class MainView extends javax.swing.JFrame {
 
         this.eventNameList.setModel(listModel);
         this.eventNameList.setSelectedIndex(0);
+        this.eventPane.resetToPreferredSizes();
     }
 
     public EventList getEventsListModel() {
