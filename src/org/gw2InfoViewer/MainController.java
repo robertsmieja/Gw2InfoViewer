@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.HttpClient;
@@ -72,7 +73,7 @@ public class MainController {
             return;
         }
         
-        gson.fromJson(responseBody, Event[].class);
+        eventArray = new ArrayList(Arrays.asList(gson.fromJson("[" + responseBody + "]", Event[].class)));
         
         mainView.setEventsListModel(responseBody);
     }
