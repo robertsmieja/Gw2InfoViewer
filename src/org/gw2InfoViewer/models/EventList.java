@@ -4,8 +4,10 @@
  */
 package org.gw2InfoViewer.models;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -13,28 +15,28 @@ import java.util.Iterator;
  */
 public class EventList {
 
-    private ArrayList<Event> eventList;
+    @SerializedName("events")
+    private List<Event> eventList;
 
     public EventList(ArrayList<Event> eventList) {
         this.eventList = eventList;
     }
 
-    public ArrayList<Event> getEventList() {
+    public List<Event> getEventList() {
         return eventList;
     }
 
-    public void setEventList(ArrayList<Event> eventList) {
+    public void setEventList(List<Event> eventList) {
         this.eventList = eventList;
     }
 
     @Override
     public String toString() {
-        String result = "";
-        Iterator it = eventList.iterator();
-        while (it.hasNext()) {
-            result = it.next().toString() + "\n";
+        String result = "";   
+        for(Event event: eventList){
+            result = event.toString() + "\n";
         }
-
+        
         return result;
     }
 }
