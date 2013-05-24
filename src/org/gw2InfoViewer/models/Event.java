@@ -19,11 +19,6 @@ package org.gw2InfoViewer.models;
 
 import com.google.gson.annotations.SerializedName;
 
-enum EventState {
-
-    ACTIVE, SUCCESS, FAIL, WARMUP, PREPERATION;
-}
-
 /**
  *
  * @author Robert Smieja
@@ -42,8 +37,8 @@ public class Event {
     public Event() {
         this(0, 0, null, null);
     }
-    
-    public Event(int worldId, int mapId, String eventId, EventState state){
+
+    public Event(int worldId, int mapId, String eventId, EventState state) {
         this.worldId = worldId;
         this.mapId = mapId;
         this.eventId = eventId;
@@ -74,20 +69,23 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public EventState getState() {
+    public EventState getState(){
         return state;
     }
+    
+//    public String getState() {
+//            return state.toString();
+//    }
 
-    public void setState(String state) {
-        this.state = EventState.valueOf(state);
-    }
-
-    public void setState(EventState state) {
+    public void setState(EventState state){
         this.state = state;
     }
-    
+//    public void setState(String state) {
+//        this.state = EventState.valueOf(state);
+//    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return eventId;
     }
 }

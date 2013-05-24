@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.gw2InfoViewer.controllers.HttpsConnectionManager;
+import org.gw2InfoViewer.controllers.HttpsConnectionFactory;
 import org.gw2InfoViewer.models.Event;
 import org.gw2InfoViewer.models.EventList;
 import org.gw2InfoViewer.services.JsonService;
@@ -62,7 +62,7 @@ public class MainController {
         EventList eventList;
 
         MainView mainView;
-        HttpsConnectionManager connectionManager;
+        HttpsConnectionFactory connectionFactory;
         HttpClient httpClient;
         HttpGet getEvents;
         String responseBody;
@@ -80,13 +80,13 @@ public class MainController {
         mainView = new MainView();
 
         try {
-            connectionManager = new HttpsConnectionManager(StartComRootCertificate);
+            connectionFactory = new HttpsConnectionFactory(StartComRootCertificate);
 //            eventList = new ArrayList<Event>();
             getEvents = new HttpGet(url);
             jsonService = new JsonService();
 
-            httpClient = connectionManager.getHttpClient();
-            responseBody = HttpsConnectionManager.stringFromHttpResponse(httpClient.execute(getEvents));
+            httpClient = connectionFactory.createHttpsClient();
+            responseBody = HttpsConnectionFactory.stringFromHttpResponse(httpClient.execute(getEvents));
             httpClient.getConnectionManager().shutdown();
         } catch (IOException | CertificateException ex) {
             Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);

@@ -59,7 +59,7 @@ public class MainView extends javax.swing.JFrame {
 
         this.eventNameList.setModel(listModel);
         this.eventNameList.setSelectedIndex(0);
-        this.eventPane.resetToPreferredSizes();
+        this.eventSplitPane.resetToPreferredSizes();
     }
 
     public EventList getEventsListModel() {
@@ -76,11 +76,18 @@ public class MainView extends javax.swing.JFrame {
     private void initComponents() {
 
         mainTabPane = new javax.swing.JTabbedPane();
-        eventPane = new javax.swing.JSplitPane();
+        eventSplitPane = new javax.swing.JSplitPane();
+        eventDetailsPanel = new javax.swing.JPanel();
+        eventIdLabel = new javax.swing.JLabel();
+        eventIdText = new javax.swing.JTextField();
+        mapIdLabel = new javax.swing.JLabel();
+        mapIdText = new javax.swing.JTextField();
+        worldIdText = new javax.swing.JTextField();
+        worldIdLabel = new javax.swing.JLabel();
+        stateLabel = new javax.swing.JLabel();
+        stateText = new javax.swing.JTextField();
+        eventNameListScrollPane = new javax.swing.JScrollPane();
         eventNameList = new javax.swing.JList();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         editMenu = new javax.swing.JMenu();
@@ -90,49 +97,129 @@ public class MainView extends javax.swing.JFrame {
         setTitle("Guild Wars 2 - Info Viewer");
         setIconImages(null);
 
+        eventSplitPane.setContinuousLayout(true);
+
+        eventDetailsPanel.setPreferredSize(new java.awt.Dimension(600, 600));
+
+        eventIdLabel.setText("Event ID:");
+
+        eventIdText.setEditable(false);
+        eventIdText.setText("Loading Event ID...");
+        eventIdText.setMinimumSize(new java.awt.Dimension(250, 20));
+        eventIdText.setPreferredSize(new java.awt.Dimension(150, 20));
+        eventIdText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eventIdTextActionPerformed(evt);
+            }
+        });
+
+        mapIdLabel.setText("Map ID:");
+
+        mapIdText.setEditable(false);
+        mapIdText.setText("Loading Map ID...");
+        mapIdText.setMinimumSize(new java.awt.Dimension(250, 20));
+        mapIdText.setPreferredSize(new java.awt.Dimension(250, 20));
+        mapIdText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mapIdTextActionPerformed(evt);
+            }
+        });
+
+        worldIdText.setEditable(false);
+        worldIdText.setText("Loading World ID...");
+        worldIdText.setMinimumSize(new java.awt.Dimension(250, 20));
+        worldIdText.setPreferredSize(new java.awt.Dimension(150, 20));
+        worldIdText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                worldIdTextActionPerformed(evt);
+            }
+        });
+
+        worldIdLabel.setText("World ID:");
+
+        stateLabel.setText("State:");
+
+        stateText.setEditable(false);
+        stateText.setText("Loading State...");
+        stateText.setMinimumSize(new java.awt.Dimension(250, 20));
+        stateText.setPreferredSize(new java.awt.Dimension(250, 20));
+        stateText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stateTextActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout eventDetailsPanelLayout = new javax.swing.GroupLayout(eventDetailsPanel);
+        eventDetailsPanel.setLayout(eventDetailsPanelLayout);
+        eventDetailsPanelLayout.setHorizontalGroup(
+            eventDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(eventDetailsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(eventDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(eventDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(stateLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(stateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, eventDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(worldIdLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(worldIdText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, eventDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(mapIdLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mapIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, eventDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(eventIdLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(eventIdText, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
+                .addGap(364, 364, 364))
+        );
+        eventDetailsPanelLayout.setVerticalGroup(
+            eventDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(eventDetailsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(eventDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(eventIdLabel)
+                    .addComponent(eventIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(eventDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mapIdLabel)
+                    .addComponent(mapIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(eventDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(worldIdLabel)
+                    .addComponent(worldIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(eventDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stateLabel)
+                    .addComponent(stateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(461, Short.MAX_VALUE))
+        );
+
+        stateText.getAccessibleContext().setAccessibleDescription("");
+
+        eventSplitPane.setRightComponent(eventDetailsPanel);
+
+        eventNameListScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        eventNameListScrollPane.setMinimumSize(new java.awt.Dimension(250, 200));
+        eventNameListScrollPane.setPreferredSize(new java.awt.Dimension(200, 200));
+
         eventNameList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Loading..." };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        eventNameList.setPreferredSize(new java.awt.Dimension(200, 800));
-        eventPane.setLeftComponent(eventNameList);
-
-        jPanel1.setPreferredSize(new java.awt.Dimension(600, 600));
-
-        jLabel1.setText("Event Name");
-
-        jTextField1.setText("Event Name");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        eventNameList.setMinimumSize(new java.awt.Dimension(200, 16));
+        eventNameList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                eventNameListValueChanged(evt);
             }
         });
+        eventNameListScrollPane.setViewportView(eventNameList);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(601, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(539, Short.MAX_VALUE))
-        );
+        eventSplitPane.setLeftComponent(eventNameListScrollPane);
 
-        eventPane.setRightComponent(jPanel1);
-
-        mainTabPane.addTab("Events", eventPane);
+        mainTabPane.addTab("Events", eventSplitPane);
 
         fileMenu.setText("File");
         mainMenuBar.add(fileMenu);
@@ -155,9 +242,9 @@ public class MainView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 950, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(mainTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE))
+                .addComponent(mainTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,19 +261,48 @@ public class MainView extends javax.swing.JFrame {
         refreshMenu.setSelected(false);
     }//GEN-LAST:event_refreshMenuMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void eventIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventIdTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_eventIdTextActionPerformed
+
+    private void eventNameListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_eventNameListValueChanged
+        Event event = ((Event)eventNameList.getSelectedValue());
+        
+        eventIdText.setText(event.getEventId());
+        worldIdText.setText(event.getWorldId().toString());
+        mapIdText.setText(event.getMapId().toString());
+        stateText.setText(event.getState().toString());
+    }//GEN-LAST:event_eventNameListValueChanged
+
+    private void mapIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapIdTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mapIdTextActionPerformed
+
+    private void worldIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_worldIdTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_worldIdTextActionPerformed
+
+    private void stateTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stateTextActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu editMenu;
+    private javax.swing.JPanel eventDetailsPanel;
+    private javax.swing.JLabel eventIdLabel;
+    private javax.swing.JTextField eventIdText;
     private javax.swing.JList eventNameList;
-    private javax.swing.JSplitPane eventPane;
+    private javax.swing.JScrollPane eventNameListScrollPane;
+    private javax.swing.JSplitPane eventSplitPane;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JTabbedPane mainTabPane;
+    private javax.swing.JLabel mapIdLabel;
+    private javax.swing.JTextField mapIdText;
     private javax.swing.JMenu refreshMenu;
+    private javax.swing.JLabel stateLabel;
+    private javax.swing.JTextField stateText;
+    private javax.swing.JLabel worldIdLabel;
+    private javax.swing.JTextField worldIdText;
     // End of variables declaration//GEN-END:variables
 }

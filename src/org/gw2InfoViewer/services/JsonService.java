@@ -45,7 +45,7 @@ public class JsonService {
 //        JsonElement jsonElement;
         JsonObject jsonObject;
         
-        eventArray = new ArrayList<Event>();
+        eventArray = new ArrayList<>();
         jsonObject = jsonParser.parse(json).getAsJsonObject();
         jsonArray = jsonObject.get("events").getAsJsonArray();
 //        System.out.println(jsonArray.isJsonArray());
@@ -54,6 +54,7 @@ public class JsonService {
         for(int i = 0; i < jsonArray.size(); i++){
             Event event;
             event = gson.fromJson(jsonArray.get(i), Event.class);
+//            event.setState(gson.fromJson(jsonArray.get(i));
             eventArray.add(event);
         }
 //        String message = gson.fromJson(array.get(0), String.class);

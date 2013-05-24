@@ -44,15 +44,15 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
- * Helps manage HTTPS connections
+ * Factory to return HttpClients with custom SSL options
  *
  * @author Robert Smieja
  */
-public class HttpsConnectionManager {
+public class HttpsConnectionFactory {
     final private byte[] sslCertificateBytes;
     final private Certificate[] sslCertificate;
 
-    public HttpsConnectionManager(byte[] sslCertificateBytes) throws CertificateException {
+    public HttpsConnectionFactory(byte[] sslCertificateBytes) throws CertificateException {
         this.sslCertificateBytes = sslCertificateBytes;
         this.sslCertificate = convertByteArrayToCertificate(this.sslCertificateBytes);
     }
@@ -73,7 +73,7 @@ public class HttpsConnectionManager {
         return certs;
     }
 
-    public HttpClient getHttpClient() {
+    public HttpClient createHttpsClient() {
 
         DefaultHttpClient httpClient;
         httpClient = new DefaultHttpClient();
@@ -95,7 +95,7 @@ public class HttpsConnectionManager {
             httpClient.getConnectionManager().getSchemeRegistry().register(sch);
 
         } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
-            Logger.getLogger(HttpsConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return httpClient;
