@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gw2InfoViewer.models;
+package org.gw2InfoViewer.maps;
 
 import java.util.Map;
 
@@ -24,11 +24,18 @@ import java.util.Map;
  * @author Robert Smieja
  */
 public class NameMap {
-    
+
     private Map<String, String> nameMap;
-    
-    public NameMap(Map<String, String> nameMap){
+
+    public NameMap(Map<String, String> nameMap) {
         this.nameMap = nameMap;
     }
-    
+
+    public Map<String, String> getNameMap() {
+        return nameMap;
+    }
+
+    public void setNameMap(Map<String, String> nameMap) {
+        this.nameMap = nameMap;
+    }
 }

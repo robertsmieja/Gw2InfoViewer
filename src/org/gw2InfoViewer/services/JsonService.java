@@ -19,7 +19,6 @@ package org.gw2InfoViewer.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.ArrayList;
@@ -27,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.gw2InfoViewer.models.Event;
 import org.gw2InfoViewer.models.EventList;
-import org.gw2InfoViewer.models.IdNamePair;
-import org.gw2InfoViewer.models.NameMap;
+import org.gw2InfoViewer.maps.IdNamePair;
+import org.gw2InfoViewer.maps.NameMap;
 
 /**
  *
@@ -52,19 +51,13 @@ public class JsonService {
         eventArray = new ArrayList<>();
         jsonObject = jsonParser.parse(json).getAsJsonObject();
         jsonArray = jsonObject.get("events").getAsJsonArray();
-//        System.out.println(jsonArray.isJsonArray());
-//        jsonArray = jsonParser.parse(json).getAsJsonArray();
 
         for (int i = 0; i < jsonArray.size(); i++) {
             Event event;
             event = gson.fromJson(jsonArray.get(i), Event.class);
-//            event.setState(gson.fromJson(jsonArray.get(i));
             eventArray.add(event);
         }
-//        String message = gson.fromJson(array.get(0), String.class);
-//        int number = gson.fromJson(array.get(1), int.class);
-//        Event event = gson.fromJson(array.get(2), Event.class);
-        //        eventArray = new ArrayList(Arrays.asList(gson.fromJson("[" + responseBody + "]", Event[].class)));
+        
         return new EventList(eventArray);
     }
 
@@ -74,22 +67,14 @@ public class JsonService {
         JsonObject jsonObject;
 
         nameHashMap = new HashMap<>();
-        JsonElement jsonElement = jsonParser.parse(json);
+        jsonArray = jsonParser.parse(json).getAsJsonArray();
 
-        System.out.println(jsonElement.getClass());
-//        System.out.println(jsonElement.);
-
-//
-//        for (int i = 0; i < jsonArray.size(); i++) {
-//            IdNamePair namePair;
-//            namePair = gson.fromJson(jsonArray.get(i), IdNamePair.class);
-////            event.setState(gson.fromJson(jsonArray.get(i));
-//            nameHashMap.put(namePair.getEventId(), namePair.getName());
-//        }
-////        String message = gson.fromJson(array.get(0), String.class);
-////        int number = gson.fromJson(array.get(1), int.class);
-////        Event event = gson.fromJson(array.get(2), Event.class);
-//        //        eventArray = new ArrayList(Arrays.asList(gson.fromJson("[" + responseBody + "]", Event[].class)));
+        for (int i = 0; i < jsonArray.size(); i++) {
+            IdNamePair namePair;
+            namePair = gson.fromJson(jsonArray.get(i), IdNamePair.class);
+            nameHashMap.put(namePair.getEventId(), namePair.getName());
+        }
+        
         return new NameMap(nameHashMap);
     }
 }

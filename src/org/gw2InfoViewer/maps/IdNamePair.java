@@ -15,9 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gw2InfoViewer.models;
-
-import com.google.gson.annotations.SerializedName;
+package org.gw2InfoViewer.maps;
 
 /**
  *
@@ -25,9 +23,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class IdNamePair {
 
-//    @SerializedName("id")
     private String id;
-//    @SerializedName("name")
     private String name;
 
     public String getEventId() {

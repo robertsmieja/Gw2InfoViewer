@@ -17,7 +17,7 @@
  */
 package org.gw2InfoViewer;
 
-import org.gw2InfoViewer.models.NameMap;
+import org.gw2InfoViewer.maps.NameMap;
 import java.awt.EventQueue;
 import javax.swing.DefaultListModel;
 import org.gw2InfoViewer.models.Event;
@@ -60,7 +60,6 @@ public class MainView extends javax.swing.JFrame {
 
         this.eventNameList.setModel(listModel);
         this.eventNameList.setSelectedIndex(0);
-//        this.eventSplitPane.resetToPreferredSizes();
     }
 
     public EventList getEventsListModel() {
@@ -107,9 +106,10 @@ public class MainView extends javax.swing.JFrame {
         setTitle("Guild Wars 2 - Info Viewer");
         setIconImages(null);
 
+        eventSplitPane.setResizeWeight(0.75);
         eventSplitPane.setContinuousLayout(true);
 
-        eventDetailsPanel.setPreferredSize(new java.awt.Dimension(600, 600));
+        eventDetailsPanel.setPreferredSize(eventDetailsPanel.getMinimumSize());
 
         eventIdLabel.setText("Event ID:");
 
@@ -206,14 +206,13 @@ public class MainView extends javax.swing.JFrame {
 
         eventNameListScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         eventNameListScrollPane.setMinimumSize(new java.awt.Dimension(250, 200));
-        eventNameListScrollPane.setPreferredSize(new java.awt.Dimension(200, 200));
+        eventNameListScrollPane.setPreferredSize(new java.awt.Dimension(600, 200));
 
         eventNameList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Loading..." };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        eventNameList.setMinimumSize(new java.awt.Dimension(200, 16));
         eventNameList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 eventNameListValueChanged(evt);
