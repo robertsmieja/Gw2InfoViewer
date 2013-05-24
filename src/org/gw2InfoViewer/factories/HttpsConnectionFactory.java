@@ -49,12 +49,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * @author Robert Smieja
  */
 public class HttpsConnectionFactory {
-    final private byte[] sslCertificateBytes;
-    final private Certificate[] sslCertificate;
+    private static HttpsConnectionFactory instance = null;
+    
+    protected HttpsConnectionFactory() {
+    }
 
-    public HttpsConnectionFactory(byte[] sslCertificateBytes) throws CertificateException {
-        this.sslCertificateBytes = sslCertificateBytes;
-        this.sslCertificate = convertByteArrayToCertificate(this.sslCertificateBytes);
+    public static HttpsConnectionFactory getInstance() {
+        if (instance == null) {
+            instance = new HttpsConnectionFactory();
+        }
+        return instance;
     }
 
     public static Certificate[] convertByteArrayToCertificate(byte[] sslCertificate) throws CertificateException {
@@ -73,11 +77,41 @@ public class HttpsConnectionFactory {
         return certs;
     }
 
-    public HttpClient createHttpsClient() {
-
+    public static HttpClient getHttpsClient(byte[] sslCertificateBytes) {
         DefaultHttpClient httpClient;
-        httpClient = new DefaultHttpClient();
+        Certificate[] sslCertificate;
 
+        httpClient = new DefaultHttpClient();
+        try {
+            sslCertificate = convertByteArrayToCertificate(sslCertificateBytes);
+
+            TrustManagerFactory tf = TrustManagerFactory.getInstance("X509");
+            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            ks.load(null);
+            for (int i = 0; i < sslCertificate.length; i++) {
+                ks.setCertificateEntry("StartCom" + i, sslCertificate[i]);
+            }
+            
+            tf.init(ks);
+            TrustManager[] tm = tf.getTrustManagers();
+            
+            SSLContext sslCon = SSLContext.getInstance("SSL");
+            sslCon.init(null, tm, new SecureRandom());
+            SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
+            Scheme sch = new Scheme("https", 443, socketFactory);
+            
+            httpClient.getConnectionManager().getSchemeRegistry().register(sch);
+        } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
+            Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return httpClient;
+    }
+    
+        public static HttpClient getHttpsClient(Certificate[] sslCertificate) {
+        DefaultHttpClient httpClient;
+
+        httpClient = new DefaultHttpClient();
         try {
             TrustManagerFactory tf = TrustManagerFactory.getInstance("X509");
             KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -85,15 +119,16 @@ public class HttpsConnectionFactory {
             for (int i = 0; i < sslCertificate.length; i++) {
                 ks.setCertificateEntry("StartCom" + i, sslCertificate[i]);
             }
+            
             tf.init(ks);
             TrustManager[] tm = tf.getTrustManagers();
+            
             SSLContext sslCon = SSLContext.getInstance("SSL");
             sslCon.init(null, tm, new SecureRandom());
             SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
             Scheme sch = new Scheme("https", 443, socketFactory);
-
+            
             httpClient.getConnectionManager().getSchemeRegistry().register(sch);
-
         } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
             Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,18 +136,17 @@ public class HttpsConnectionFactory {
         return httpClient;
     }
 
-    public static String stringFromHttpResponse(HttpResponse response) throws IOException {
-        BufferedReader br;
+    public static String getStringFromHttpResponse(HttpResponse response) throws IOException {
+        BufferedReader reader;
         String result = "";
         String output;
 
-        br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+        reader = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
 
-        while ((output = br.readLine()) != null) {
+        while ((output = reader.readLine()) != null) {
             result += output;
         }
 
         return result;
-
     }
 }
