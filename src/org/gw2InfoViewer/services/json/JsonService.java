@@ -44,21 +44,10 @@ public class JsonService {
     }
 
     public EventList parseEventListJson(String json) {
-        ArrayList<Event> eventArray;
-        JsonArray jsonArray;
-        JsonObject jsonObject;
-
-        eventArray = new ArrayList<>();
-        jsonObject = jsonParser.parse(json).getAsJsonObject();
-        jsonArray = jsonObject.get("events").getAsJsonArray();
-
-        for (int i = 0; i < jsonArray.size(); i++) {
-            Event event;
-            event = gson.fromJson(jsonArray.get(i), Event.class);
-            eventArray.add(event);
-        }
         
-        return new EventList(eventArray);
+        EventList eventList = gson.fromJson(json, EventList.class);
+        
+        return eventList;
     }
 
     public NameMap parseNameMapJson(String json) {
