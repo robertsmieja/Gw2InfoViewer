@@ -19,41 +19,23 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="mapNameLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="mapNameText" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="eventNameLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="eventNameText" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="eventIdLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="eventIdText" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="mapIdLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="mapIdText" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="worldNameLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="worldNameText" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="worldIdLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="worldIdText" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="stateLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="stateText" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="eventNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="worldNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="worldIdLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="stateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="eventIdLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="mapNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="mapIdLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="stateText" min="-2" max="-2" attributes="0"/>
+                  <Component id="eventNameText" alignment="0" max="-2" attributes="0"/>
+                  <Component id="mapNameText" min="-2" max="-2" attributes="0"/>
+                  <Component id="mapIdText" min="-2" max="-2" attributes="0"/>
+                  <Component id="eventIdText" alignment="0" max="-2" attributes="0"/>
+                  <Component id="worldNameText" alignment="0" max="-2" attributes="0"/>
+                  <Component id="worldIdText" alignment="0" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -93,9 +75,9 @@
                   <Component id="worldIdText" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="stateLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="stateText" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="stateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="stateText" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
