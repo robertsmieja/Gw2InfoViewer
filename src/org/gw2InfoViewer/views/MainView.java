@@ -72,8 +72,10 @@ public class MainView extends javax.swing.JFrame {
             listModel.addElement(event);
         }
 
-        this.eventScrollListPanel.setListModel(listModel);
-        this.eventScrollListPanel.setIndex(0);
+        this.eventNameList.setModel(listModel);
+        this.eventNameList.setSelectedIndex(0);
+//        this.eventScrollListPanel.setListModel(listModel);
+//        this.eventScrollListPanel.setIndex(0);
 
         this.eventList = eventList;
     }
@@ -101,7 +103,8 @@ public class MainView extends javax.swing.JFrame {
         mainTabPane = new javax.swing.JTabbedPane();
         eventSplitPane = new javax.swing.JSplitPane();
         eventDetailsPanel = new org.gw2InfoViewer.views.events.EventDetailsPanel();
-        eventScrollListPanel = new org.gw2InfoViewer.views.events.EventScrollListPanel(eventDetailsPanel);
+        eventNameListScrollPane = new javax.swing.JScrollPane();
+        eventNameList = new javax.swing.JList();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -113,12 +116,27 @@ public class MainView extends javax.swing.JFrame {
         setTitle("Guild Wars 2 - Info Viewer");
         setIconImages(null);
 
-        eventSplitPane.setResizeWeight(1.0);
+        eventSplitPane.setResizeWeight(0.75);
         eventSplitPane.setContinuousLayout(true);
         eventSplitPane.setRightComponent(eventDetailsPanel);
 
-        eventScrollListPanel.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        eventSplitPane.setLeftComponent(eventScrollListPanel);
+        eventNameListScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        eventNameListScrollPane.setMinimumSize(new java.awt.Dimension(250, 200));
+        eventNameListScrollPane.setPreferredSize(new java.awt.Dimension(600, 200));
+
+        eventNameList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Loading..." };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        eventNameList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                eventNameListValueChanged(evt);
+            }
+        });
+        eventNameListScrollPane.setViewportView(eventNameList);
+
+        eventSplitPane.setLeftComponent(eventNameListScrollPane);
 
         mainTabPane.addTab("Events", eventSplitPane);
 
@@ -186,9 +204,9 @@ public class MainView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
+            .addGap(0, 965, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(mainTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
+                .addComponent(mainTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,10 +249,24 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
         refreshMenu.setSelected(false);
     }//GEN-LAST:event_refreshMenuStateChanged
+
+    private void eventNameListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_eventNameListValueChanged
+        if (eventNameList.getSelectedIndex() >= 0) {
+            Event event = ((Event) eventNameList.getSelectedValue());
+
+            this.eventDetailsPanel.setEvent(event);
+//            eventIdText.setText(event.getEventId());
+//            worldIdText.setText(event.getWorldId().toString());
+//            mapIdText.setText(event.getMapId().toString());
+//            stateText.setText(event.getState().toString());
+        }
+    }//GEN-LAST:event_eventNameListValueChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu editMenu;
     private org.gw2InfoViewer.views.events.EventDetailsPanel eventDetailsPanel;
-    private org.gw2InfoViewer.views.events.EventScrollListPanel eventScrollListPanel;
+    private javax.swing.JList eventNameList;
+    private javax.swing.JScrollPane eventNameListScrollPane;
     private javax.swing.JSplitPane eventSplitPane;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
