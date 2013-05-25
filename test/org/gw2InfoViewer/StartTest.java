@@ -15,42 +15,23 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gw2InfoViewer.models;
+package org.gw2InfoViewer;
 
-import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.junit.Test;
+import static org.mockito.Mockito.any;
 
 /**
  *
  * @author Robert Smieja
  */
-public class EventList {
-
-    @SerializedName("events")
-    private List<Event> eventList;
-
-    public EventList(List<Event> eventList) {
-        this.eventList = eventList;
-    }
-
-    public List<Event> getEventList() {
-        return eventList;
-    }
-
-    public void setEventList(List<Event> eventList) {
-        this.eventList = eventList;
-    }
-    
-    @Override
-    public String toString() {
-        String result = "";
-        for (Iterator<Event> it = eventList.iterator(); it.hasNext();) {
-            Event event = it.next();
-            result = event.toString() + "\n";
-        }
-
-        return result;
+public class StartTest{
+    /**
+     * Test of main method, of class Start.
+     */
+    @Test
+    public void testMain() {
+        String[] args = any(String[].class);
+       
+        Start.main(args);
     }
 }

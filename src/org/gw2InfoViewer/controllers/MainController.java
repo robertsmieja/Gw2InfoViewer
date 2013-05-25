@@ -57,7 +57,7 @@ public class MainController {
     private NameMap eventNameMap;
 //    private static final String WORLD_ID = "";
 
-    protected MainController() {
+    private MainController() {
         String eventsUrl = API_BASE_URL + API_VERSION + API_EVENTS + WORLD_ID;
         String eventNamesUrl = API_BASE_URL + API_VERSION + API_EVENT_NAMES;
 

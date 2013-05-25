@@ -51,7 +51,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 public class HttpsConnectionFactory {
     private static HttpsConnectionFactory instance = null;
     
-    protected HttpsConnectionFactory() {
+    private HttpsConnectionFactory() {
     }
 
     public static HttpsConnectionFactory getInstance() {
