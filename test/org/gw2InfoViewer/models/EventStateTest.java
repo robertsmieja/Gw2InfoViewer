@@ -45,7 +45,9 @@ public class EventStateTest {
             EventState.Success,
             EventState.Fail,
             EventState.Warmup,
-            EventState.Preperation};
+            EventState.Preperation,
+            EventState.Invalid
+        };
 
         EventState[] result = EventState.values();
 

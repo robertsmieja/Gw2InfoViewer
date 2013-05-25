@@ -31,7 +31,6 @@ import org.gw2InfoViewer.models.EventList;
  */
 public class MainView extends javax.swing.JFrame {
 
-//    private static MainView instance = null;
     private static MainController controller;
     private EventList eventList;
     private NameMap eventNameMap;
@@ -74,8 +73,6 @@ public class MainView extends javax.swing.JFrame {
 
         this.eventNameList.setModel(listModel);
         this.eventNameList.setSelectedIndex(0);
-//        this.eventScrollListPanel.setListModel(listModel);
-//        this.eventScrollListPanel.setIndex(0);
 
         this.eventList = eventList;
     }
@@ -251,14 +248,10 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshMenuStateChanged
 
     private void eventNameListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_eventNameListValueChanged
-        if (eventNameList.getSelectedIndex() >= 0) {
+        if (eventNameList.getSelectedIndex() >= 0 && (eventNameList.getSelectedValue() instanceof Event)) {
             Event event = ((Event) eventNameList.getSelectedValue());
 
             this.eventDetailsPanel.setEvent(event);
-//            eventIdText.setText(event.getEventId());
-//            worldIdText.setText(event.getWorldId().toString());
-//            mapIdText.setText(event.getMapId().toString());
-//            stateText.setText(event.getState().toString());
         }
     }//GEN-LAST:event_eventNameListValueChanged
 

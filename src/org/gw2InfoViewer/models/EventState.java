@@ -9,5 +9,5 @@ package org.gw2InfoViewer.models;
  * @author Robert Smieja
  */
 public enum EventState {
-    Active, Success, Fail, Warmup, Preperation;
+    Active, Success, Fail, Warmup, Preperation, Invalid;
 }
