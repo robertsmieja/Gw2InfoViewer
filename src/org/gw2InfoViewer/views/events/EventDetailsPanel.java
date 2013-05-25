@@ -43,6 +43,7 @@ public class EventDetailsPanel extends javax.swing.JPanel {
     public void setEvent(Event event) {
         this.event = event;
         
+        
         eventIdText.setText(event.getEventId());
         worldIdText.setText(event.getWorldId().toString());
         mapIdText.setText(event.getMapId().toString());
@@ -58,14 +59,32 @@ public class EventDetailsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        eventNameLabel = new javax.swing.JLabel();
+        eventNameText = new javax.swing.JTextField();
         eventIdLabel = new javax.swing.JLabel();
         eventIdText = new javax.swing.JTextField();
+        mapNameLabel = new javax.swing.JLabel();
+        mapNameText = new javax.swing.JTextField();
         mapIdLabel = new javax.swing.JLabel();
         mapIdText = new javax.swing.JTextField();
-        worldIdText = new javax.swing.JTextField();
+        worldNameLabel = new javax.swing.JLabel();
+        worldNameText = new javax.swing.JTextField();
         worldIdLabel = new javax.swing.JLabel();
+        worldIdText = new javax.swing.JTextField();
         stateLabel = new javax.swing.JLabel();
         stateText = new javax.swing.JTextField();
+
+        eventNameLabel.setText("Event Name:");
+
+        eventNameText.setEditable(false);
+        eventNameText.setText("Loading Event Name...");
+        eventNameText.setMinimumSize(new java.awt.Dimension(250, 20));
+        eventNameText.setPreferredSize(new java.awt.Dimension(150, 20));
+        eventNameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eventNameTextActionPerformed(evt);
+            }
+        });
 
         eventIdLabel.setText("Event ID:");
 
@@ -76,6 +95,18 @@ public class EventDetailsPanel extends javax.swing.JPanel {
         eventIdText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eventIdTextActionPerformed(evt);
+            }
+        });
+
+        mapNameLabel.setText("Map Name:");
+
+        mapNameText.setEditable(false);
+        mapNameText.setText("Loading Map Name...");
+        mapNameText.setMinimumSize(new java.awt.Dimension(250, 20));
+        mapNameText.setPreferredSize(new java.awt.Dimension(250, 20));
+        mapNameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mapNameTextActionPerformed(evt);
             }
         });
 
@@ -91,6 +122,20 @@ public class EventDetailsPanel extends javax.swing.JPanel {
             }
         });
 
+        worldNameLabel.setText("World Name:");
+
+        worldNameText.setEditable(false);
+        worldNameText.setText("Loading World Name...");
+        worldNameText.setMinimumSize(new java.awt.Dimension(250, 20));
+        worldNameText.setPreferredSize(new java.awt.Dimension(150, 20));
+        worldNameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                worldNameTextActionPerformed(evt);
+            }
+        });
+
+        worldIdLabel.setText("World ID:");
+
         worldIdText.setEditable(false);
         worldIdText.setText("Loading World ID...");
         worldIdText.setMinimumSize(new java.awt.Dimension(250, 20));
@@ -100,8 +145,6 @@ public class EventDetailsPanel extends javax.swing.JPanel {
                 worldIdTextActionPerformed(evt);
             }
         });
-
-        worldIdLabel.setText("World ID:");
 
         stateLabel.setText("State:");
 
@@ -122,16 +165,34 @@ public class EventDetailsPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(stateLabel)
-                    .addComponent(worldIdLabel)
-                    .addComponent(eventIdLabel)
-                    .addComponent(mapIdLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(stateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(worldIdText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mapIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eventIdText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mapNameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mapNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(eventNameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eventNameText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(eventIdLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eventIdText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mapIdLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mapIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(worldNameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(worldNameText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(worldIdLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(worldIdText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(stateLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,18 +200,30 @@ public class EventDetailsPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(eventNameLabel)
+                    .addComponent(eventNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eventIdLabel)
                     .addComponent(eventIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mapNameLabel)
+                    .addComponent(mapNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mapIdLabel)
                     .addComponent(mapIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(worldNameLabel)
+                    .addComponent(worldNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(worldIdLabel)
                     .addComponent(worldIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(stateLabel)
                     .addComponent(stateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -172,14 +245,33 @@ public class EventDetailsPanel extends javax.swing.JPanel {
     private void stateTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_stateTextActionPerformed
+
+    private void eventNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventNameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eventNameTextActionPerformed
+
+    private void mapNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapNameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mapNameTextActionPerformed
+
+    private void worldNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_worldNameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_worldNameTextActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel eventIdLabel;
     private javax.swing.JTextField eventIdText;
+    private javax.swing.JLabel eventNameLabel;
+    private javax.swing.JTextField eventNameText;
     private javax.swing.JLabel mapIdLabel;
     private javax.swing.JTextField mapIdText;
+    private javax.swing.JLabel mapNameLabel;
+    private javax.swing.JTextField mapNameText;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateText;
     private javax.swing.JLabel worldIdLabel;
     private javax.swing.JTextField worldIdText;
+    private javax.swing.JLabel worldNameLabel;
+    private javax.swing.JTextField worldNameText;
     // End of variables declaration//GEN-END:variables
 }
