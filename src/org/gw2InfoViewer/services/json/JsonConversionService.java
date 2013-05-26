@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.gw2InfoViewer.maps.IdNamePair;
+import org.gw2InfoViewer.services.json.models.IdNamePair;
 import org.gw2InfoViewer.maps.EventNames;
 import org.gw2InfoViewer.maps.MapNames;
 import org.gw2InfoViewer.maps.WorldNames;
@@ -55,20 +55,34 @@ public class JsonConversionService {
         this.jsonParser = new JsonParser();
     }
 
+    @Deprecated
     public static EventList parseEventList(String json) {
 
         EventList eventList = gsonBuilder.create().fromJson(json, EventList.class);
-//        EventList eventList = gson.fromJson(json, EventList.class);
 
         return eventList;
     }
 
-    public static EventList parseEventList(InputStream input) throws IOException {
+    public static EventList parseEventList(InputStream json, EventNames eventNames, MapNames mapNames, WorldNames worldNames) throws IOException {
+        EventList eventList;
+
+        eventList = parseEventListWithoutNames(json);
+
+        for (Event event : eventList.getEventList()) {
+            event.setEventName(eventNames.getMap().get(event.getEventId()));
+            event.setMapName(mapNames.getMap().get(event.getMapId()));
+            event.setWorldName(worldNames.getMap().get(event.getWorldId()));
+        }
+
+        return eventList;
+    }
+
+    public static EventList parseEventListWithoutNames(InputStream json) throws IOException {
         List<Event> events;
 
         events = new ArrayList<Event>();
 
-        JsonReader reader = new JsonReader(new InputStreamReader(input));
+        JsonReader reader = new JsonReader(new InputStreamReader(json));
         reader.beginObject();
         if (reader.nextName().equals("events")) {
             reader.beginArray();
@@ -111,8 +125,8 @@ public class JsonConversionService {
         }
         return new MapNames(nameHashBiMap);
     }
-    
-       public static WorldNames parseWorldNames(String json) {
+
+    public static WorldNames parseWorldNames(String json) {
         BiMap<Integer, String> nameHashBiMap;
         JsonArray jsonArray;
 

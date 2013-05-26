@@ -17,13 +17,14 @@ public class Options {
     private Boolean proxyEnabled;
     private String proxyAddress;
     private Integer proxyPort;
-    private String proxyProtocol = "https";
+    final private String proxyProtocol = "https";
 
     public Options() {
         this.currentWorld = 0;
         this.currentMap = 0;
         this.currentEventId = "";
         this.currentMatchId = 0;
+        this.proxyEnabled = false;
         this.proxyAddress = "";
         this.proxyPort = 0;
 //        this.proxyProtocol = "";

@@ -25,12 +25,13 @@ public class OptionsForm extends javax.swing.JDialog {
      */
     public OptionsForm(java.awt.Frame parent, boolean modal, Options options, WorldNames worldNames, MapNames mapNames) {
         super(parent, modal);
-        setOptions(options, worldNames, mapNames);
 
         this.worldNames = worldNames;
         this.mapNames = mapNames;
 
         initComponents();
+
+        setOptions(options, worldNames, mapNames);
     }
 
     public void setOptions(Options options, WorldNames worldNames, MapNames mapNames) {

@@ -94,6 +94,22 @@ public class MainView extends javax.swing.JFrame {
         return this.eventNames;
     }
 
+    public WorldNames getWorldNames() {
+        return worldNames;
+    }
+
+    public void setWorldNames(WorldNames worldNames) {
+        this.worldNames = worldNames;
+    }
+
+    public MapNames getMapNames() {
+        return mapNames;
+    }
+
+    public void setMapNames(MapNames mapNames) {
+        this.mapNames = mapNames;
+    }
+
     public Options getOptions() {
         return options;
     }

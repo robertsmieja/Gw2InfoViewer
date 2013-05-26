@@ -4,6 +4,7 @@
  */
 package org.gw2InfoViewer.maps;
 
+import org.gw2InfoViewer.services.json.models.IdNamePair;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

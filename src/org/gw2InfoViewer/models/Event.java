@@ -26,12 +26,14 @@ import com.google.gson.annotations.SerializedName;
 public class Event {
 
     private String eventName;
-    @SerializedName("world_id")
-    private int worldId;
-    @SerializedName("map_id")
-    private int mapId;
     @SerializedName("event_id")
     private String eventId;
+    private String worldName;
+    @SerializedName("world_id")
+    private Integer worldId;
+    private String mapName;
+    @SerializedName("map_id")
+    private Integer mapId;
     @SerializedName("state")
     private EventState state;
 
@@ -55,6 +57,22 @@ public class Event {
         this.eventName = eventName;
     }
 
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getWorldName() {
+        return worldName;
+    }
+
+    public void setWorldName(String worldName) {
+        this.worldName = worldName;
+    }
+
     public Integer getWorldId() {
         return worldId;
     }
@@ -63,20 +81,20 @@ public class Event {
         this.worldId = worldId;
     }
 
+    public String getMapName() {
+        return mapName;
+    }
+
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
+    }
+
     public Integer getMapId() {
         return mapId;
     }
 
     public void setMapId(Integer mapId) {
         this.mapId = mapId;
-    }
-
-    public String getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
     }
 
     public EventState getState() {

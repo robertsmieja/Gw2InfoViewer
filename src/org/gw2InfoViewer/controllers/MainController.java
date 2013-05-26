@@ -18,6 +18,7 @@
 package org.gw2InfoViewer.controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.HttpClient;
@@ -27,6 +28,8 @@ import org.gw2InfoViewer.factories.HttpsConnectionFactory;
 import org.gw2InfoViewer.models.Event;
 import org.gw2InfoViewer.models.EventList;
 import org.gw2InfoViewer.maps.EventNames;
+import org.gw2InfoViewer.maps.MapNames;
+import org.gw2InfoViewer.maps.WorldNames;
 import org.gw2InfoViewer.models.Options;
 import org.gw2InfoViewer.services.json.JsonConversionService;
 
@@ -40,8 +43,8 @@ public class MainController {
     private static final String API_VERSION = "v1/";
     private static final String API_EVENTS = "events.json";
     private static final String API_EVENT_NAMES = "event_names.json";
-    private static final String API_EVENT_MAP_NAMES = "map_names.json";
-    private static final String API_EVENT_WORLD_NAMES = "world_names.json";
+    private static final String API_MAP_NAMES = "map_names.json";
+    private static final String API_WORLD_NAMES = "world_names.json";
     private static final String API_WVW = "wvw/";
     private static final String API_WVW_MATCHES = "matches.json";
     private static final String API_WVW_MATCH_DETAILS = "match_details.json";
@@ -54,26 +57,34 @@ public class MainController {
     private static final String WORLD_ID = "";
     private static MainController instance;
     private static MainView view;
-    
+
     private MainController() {
         EventList eventList;
-        EventNames eventNameMap;
+        EventNames eventNames;
+        WorldNames worldNames;
+        MapNames mapNames;
 
         view = new MainView(this, new Options());
         try {
-            eventList = getEventList();
-            eventNameMap = getEventNameMap();
+            eventNames = getEventNames();
+            mapNames = getMapNames();
+            worldNames = getWorldNames();
+
+            eventList = getEventList(eventNames, mapNames, worldNames);
+
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
 
-        for (Event event : eventList.getEventList()) {
-            event.setEventName(eventNameMap.getMap().get(event.getEventId()));
-        }
+//        for (Event event : eventList.getEventList()) {
+//            event.setEventName(eventNames.getMap().get(event.getEventId()));
+//        }
 
         view.setEventsListModel(eventList);
-        view.setEventNames(eventNameMap);
+        view.setEventNames(eventNames);
+        view.setWorldNames(worldNames);
+        view.setMapNames(mapNames);
     }
 
     public static MainController getInstance() {
@@ -84,7 +95,7 @@ public class MainController {
         return instance;
     }
 
-    public static EventList getEventList() throws IOException {
+    public static EventList getEventList(EventNames eventNames, MapNames mapNames, WorldNames worldNames) throws IOException {
         String eventsUrl = API_BASE_URL + API_VERSION + API_EVENTS + WORLD_ID;
         EventList eventList;
         HttpClient httpClient;
@@ -92,24 +103,69 @@ public class MainController {
 
         getEvents = new HttpGet(eventsUrl);
         httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
-        eventList = JsonConversionService.parseEventList(httpClient.execute(getEvents).getEntity().getContent());
+        InputStream json = httpClient.execute(getEvents).getEntity().getContent();
+        eventList = JsonConversionService.parseEventList(json, eventNames, mapNames, worldNames);
         httpClient.getConnectionManager().shutdown();
 
         return eventList;
     }
 
-    public static EventNames getEventNameMap() throws IOException {
+    public static EventList getEventListWithoutNames() throws IOException {
+        String eventsUrl = API_BASE_URL + API_VERSION + API_EVENTS + WORLD_ID;
+        EventList eventList;
+        HttpClient httpClient;
+        HttpGet getEvents;
+
+        getEvents = new HttpGet(eventsUrl);
+        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        eventList = JsonConversionService.parseEventListWithoutNames(httpClient.execute(getEvents).getEntity().getContent());
+        httpClient.getConnectionManager().shutdown();
+
+        return eventList;
+    }
+
+    public static EventNames getEventNames() throws IOException {
         String eventNamesUrl = API_BASE_URL + API_VERSION + API_EVENT_NAMES;
-        EventNames eventNameMap;
+        EventNames eventNames;
         HttpClient httpClient;
         HttpGet getEventNames;
-        String eventNames;
+        String eventNamesJson;
         getEventNames = new HttpGet(eventNamesUrl);
 
         httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
-        eventNames = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getEventNames));
-        eventNameMap = JsonConversionService.parseEventNames(eventNames);
+        eventNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getEventNames));
+        eventNames = JsonConversionService.parseEventNames(eventNamesJson);
         httpClient.getConnectionManager().shutdown();
-        return eventNameMap;
+        return eventNames;
+    }
+
+    public static WorldNames getWorldNames() throws IOException {
+        String eventNamesUrl = API_BASE_URL + API_VERSION + API_WORLD_NAMES;
+        WorldNames worldNames;
+        HttpClient httpClient;
+        HttpGet getEventNames;
+        String worldNamesJson;
+        getEventNames = new HttpGet(eventNamesUrl);
+
+        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        worldNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getEventNames));
+        worldNames = JsonConversionService.parseWorldNames(worldNamesJson);
+        httpClient.getConnectionManager().shutdown();
+        return worldNames;
+    }
+
+    public static MapNames getMapNames() throws IOException {
+        String eventNamesUrl = API_BASE_URL + API_VERSION + API_MAP_NAMES;
+        MapNames mapNames;
+        HttpClient httpClient;
+        HttpGet getEventNames;
+        String mapNamesJson;
+        getEventNames = new HttpGet(eventNamesUrl);
+
+        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        mapNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getEventNames));
+        mapNames = JsonConversionService.parseMapNames(mapNamesJson);
+        httpClient.getConnectionManager().shutdown();
+        return mapNames;
     }
 }

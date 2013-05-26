@@ -4,6 +4,7 @@
  */
 package org.gw2InfoViewer.controllers;
 
+import java.io.IOException;
 import org.gw2InfoViewer.maps.EventNames;
 import org.gw2InfoViewer.models.EventList;
 import org.junit.After;
@@ -56,15 +57,15 @@ public class MainControllerTest {
     }
 
     /**
-     * Test of getEventList method, of class MainController.
+     * Test of getEventListWithoutNames method, of class MainController.
      */
     @Test
-    public void testGetEventList() {
+    public void testGetEventList() throws IOException {
         MainController mockController = mock(MainController.class);
         EventList eventList = any(EventList.class);
-//        when(mockController.getEventList())();
+//        when(mockController.getEventListWithoutNames())();
         
-        EventList result = mockController.getEventList();
+        EventList result = mockController.getEventListWithoutNames();
         
 //        assertEquals(expResult, result);
     }
@@ -72,26 +73,26 @@ public class MainControllerTest {
     /**
      * Test of setEventList method, of class MainController.
      */
-    @Test
-    public void testSetEventList() {
-        MainController mockController = mock(MainController.class);
-
-        EventList eventList = any(EventList.class);
-
-        mockController.setEventList(eventList);
-
-        verify(mockController).setEventList(any(EventList.class));
-    }
+//    @Test
+//    public void testSetEventList() {
+//        MainController mockController = mock(MainController.class);
+//
+//        EventList eventList = any(EventList.class);
+//
+//        mockController.setEventList(eventList);
+//
+//        verify(mockController).setEventList(any(EventList.class));
+//    }
 
     /**
-     * Test of getEventNameMap method, of class MainController.
+     * Test of getEventNames method, of class MainController.
      */
     @Test
-    public void testGetEventNameMap() {
+    public void testGetEventNameMap() throws IOException {
         System.out.println("getEventNameMap");
         MainController instance = null;
         EventNames expResult = null;
-        EventNames result = instance.getEventNameMap();
+        EventNames result = instance.getEventNames();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -100,13 +101,13 @@ public class MainControllerTest {
     /**
      * Test of setEventNameMap method, of class MainController.
      */
-    @Test
-    public void testSetEventNameMap() {
-        System.out.println("setEventNameMap");
-        EventNames eventNameMap = null;
-        MainController instance = null;
-        instance.setEventNameMap(eventNameMap);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    @Test
+//    public void testSetEventNameMap() {
+//        System.out.println("setEventNameMap");
+//        EventNames eventNameMap = null;
+//        MainController instance = null;
+//        instance.setEventNameMap(eventNameMap);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 }
