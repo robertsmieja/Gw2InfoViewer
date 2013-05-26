@@ -49,8 +49,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * @author Robert Smieja
  */
 public class HttpsConnectionFactory {
+
     private static HttpsConnectionFactory instance = null;
-    
+
     private HttpsConnectionFactory() {
     }
 
@@ -91,15 +92,15 @@ public class HttpsConnectionFactory {
             for (int i = 0; i < sslCertificate.length; i++) {
                 ks.setCertificateEntry("StartCom" + i, sslCertificate[i]);
             }
-            
+
             tf.init(ks);
             TrustManager[] tm = tf.getTrustManagers();
-            
+
             SSLContext sslCon = SSLContext.getInstance("SSL");
             sslCon.init(null, tm, new SecureRandom());
             SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
             Scheme sch = new Scheme("https", 443, socketFactory);
-            
+
             httpClient.getConnectionManager().getSchemeRegistry().register(sch);
         } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
             Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,8 +108,8 @@ public class HttpsConnectionFactory {
 
         return httpClient;
     }
-    
-        public static HttpClient getHttpsClient(Certificate[] sslCertificate) {
+
+    public static HttpClient getHttpsClient(Certificate[] sslCertificate) {
         DefaultHttpClient httpClient;
 
         httpClient = new DefaultHttpClient();
@@ -119,15 +120,15 @@ public class HttpsConnectionFactory {
             for (int i = 0; i < sslCertificate.length; i++) {
                 ks.setCertificateEntry("StartCom" + i, sslCertificate[i]);
             }
-            
+
             tf.init(ks);
             TrustManager[] tm = tf.getTrustManagers();
-            
+
             SSLContext sslCon = SSLContext.getInstance("SSL");
             sslCon.init(null, tm, new SecureRandom());
             SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
             Scheme sch = new Scheme("https", 443, socketFactory);
-            
+
             httpClient.getConnectionManager().getSchemeRegistry().register(sch);
         } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
             Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
@@ -137,14 +138,19 @@ public class HttpsConnectionFactory {
     }
 
     public static String getStringFromHttpResponse(HttpResponse response) throws IOException {
+
+        return getStringFromInputStream((response.getEntity().getContent()));
+    }
+
+    public static String getStringFromInputStream(InputStream input) throws IOException {
         BufferedReader reader;
         String result = "";
-        String output;
+        String temp;
 
-        reader = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+        reader = new BufferedReader(new InputStreamReader(input));
 
-        while ((output = reader.readLine()) != null) {
-            result += output;
+        while ((temp = reader.readLine()) != null) {
+            result += temp;
         }
 
         return result;

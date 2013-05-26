@@ -4,7 +4,7 @@
  */
 package org.gw2InfoViewer.controllers;
 
-import org.gw2InfoViewer.maps.NameMap;
+import org.gw2InfoViewer.maps.EventNames;
 import org.gw2InfoViewer.models.EventList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -90,8 +90,8 @@ public class MainControllerTest {
     public void testGetEventNameMap() {
         System.out.println("getEventNameMap");
         MainController instance = null;
-        NameMap expResult = null;
-        NameMap result = instance.getEventNameMap();
+        EventNames expResult = null;
+        EventNames result = instance.getEventNameMap();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -103,7 +103,7 @@ public class MainControllerTest {
     @Test
     public void testSetEventNameMap() {
         System.out.println("setEventNameMap");
-        NameMap eventNameMap = null;
+        EventNames eventNameMap = null;
         MainController instance = null;
         instance.setEventNameMap(eventNameMap);
         // TODO review the generated test code and remove the default call to fail.

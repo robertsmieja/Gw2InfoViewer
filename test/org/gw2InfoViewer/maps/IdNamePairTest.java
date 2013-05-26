@@ -37,28 +37,28 @@ public class IdNamePairTest {
     }
 
     /**
-     * Test of getEventId method, of class IdNamePair.
+     * Test of getId method, of class IdNamePair.
      */
     @Test
     public void testGetEventId() {
         System.out.println("getEventId");
         IdNamePair instance = new IdNamePair();
         String expResult = "";
-        String result = instance.getEventId();
+        String result = instance.getId();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setEventId method, of class IdNamePair.
+     * Test of setId method, of class IdNamePair.
      */
     @Test
     public void testSetEventId() {
         System.out.println("setEventId");
         String eventId = "";
         IdNamePair instance = new IdNamePair();
-        instance.setEventId(eventId);
+        instance.setId(eventId);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

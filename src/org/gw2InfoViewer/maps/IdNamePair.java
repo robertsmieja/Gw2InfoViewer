@@ -18,7 +18,7 @@
 package org.gw2InfoViewer.maps;
 
 /**
- *
+ * For parsing JSON
  * @author Robert Smieja
  */
 public class IdNamePair {
@@ -26,11 +26,11 @@ public class IdNamePair {
     private String id;
     private String name;
 
-    public String getEventId() {
+    public String getId() {
         return id;
     }
 
-    public void setEventId(String eventId) {
+    public void setId(String eventId) {
         this.id = eventId;
     }
 

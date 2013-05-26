@@ -17,12 +17,15 @@
  */
 package org.gw2InfoViewer.views;
 
-import org.gw2InfoViewer.maps.NameMap;
+import org.gw2InfoViewer.maps.EventNames;
 import java.awt.EventQueue;
 import javax.swing.DefaultListModel;
 import org.gw2InfoViewer.controllers.MainController;
+import org.gw2InfoViewer.maps.MapNames;
+import org.gw2InfoViewer.maps.WorldNames;
 import org.gw2InfoViewer.models.Event;
 import org.gw2InfoViewer.models.EventList;
+import org.gw2InfoViewer.models.Options;
 
 /**
  * Main window
@@ -31,16 +34,17 @@ import org.gw2InfoViewer.models.EventList;
  */
 public class MainView extends javax.swing.JFrame {
 
-    private static MainController controller;
+    private MainController controller;
+    private Options options;
     private EventList eventList;
-    private NameMap eventNameMap;
-//    private WorldNameMap itemNames;
-//    private MapNameMap mapNames;
+    private EventNames eventNames;
+    private WorldNames worldNames;
+    private MapNames mapNames;
 
     /**
      * Creates new form MainView
      */
-    public MainView(MainController controller) {
+    public MainView(MainController controller, Options options) {
         /* Set the System look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         try {
@@ -51,7 +55,7 @@ public class MainView extends javax.swing.JFrame {
         //</editor-fold>
 
         initComponents();
-        
+
         /* Create and display the form */
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -61,6 +65,7 @@ public class MainView extends javax.swing.JFrame {
         });
 
         this.controller = controller;
+        this.options = options;
     }
 
     public void setEventsListModel(EventList eventList) {
@@ -81,12 +86,20 @@ public class MainView extends javax.swing.JFrame {
         return eventList;
     }
 
-    public void setEventNameMap(NameMap eventNameMap) {
-        this.eventNameMap = eventNameMap;
+    public void setEventNames(EventNames eventName) {
+        this.eventNames = eventName;
     }
 
-    public NameMap getEventNameMap() {
-        return this.eventNameMap;
+    public EventNames getEventNames() {
+        return this.eventNames;
+    }
+
+    public Options getOptions() {
+        return options;
+    }
+
+    public void setOptions(Options options) {
+        this.options = options;
     }
 
     /**
@@ -154,7 +167,6 @@ public class MainView extends javax.swing.JFrame {
         mainMenuBar.add(editMenu);
 
         optionsMenu.setText("Options");
-        optionsMenu.setEnabled(false);
         optionsMenu.setFocusable(false);
         optionsMenu.setRequestFocusEnabled(false);
         optionsMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -230,6 +242,9 @@ public class MainView extends javax.swing.JFrame {
 
     private void optionsMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_optionsMenuMouseClicked
         //TODO: Open options window
+        OptionsForm optionsForm;
+        optionsForm = new OptionsForm(this, true, options, worldNames, mapNames);
+        optionsForm.setVisible(true);
         optionsMenu.setSelected(false);
     }//GEN-LAST:event_optionsMenuMouseClicked
 
@@ -254,7 +269,6 @@ public class MainView extends javax.swing.JFrame {
             this.eventDetailsPanel.setEvent(event);
         }
     }//GEN-LAST:event_eventNameListValueChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu editMenu;
     private org.gw2InfoViewer.views.events.EventDetailsPanel eventDetailsPanel;

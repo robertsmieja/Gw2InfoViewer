@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author Robert Smieja
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.gw2InfoViewer.maps.NameMapTest.class, org.gw2InfoViewer.maps.IdNamePairTest.class})
+@Suite.SuiteClasses({org.gw2InfoViewer.maps.EventNameMapTest.class, org.gw2InfoViewer.maps.IdNamePairTest.class})
 public class MapsSuite {
 
     @BeforeClass

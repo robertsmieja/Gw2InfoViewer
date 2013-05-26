@@ -17,6 +17,8 @@
  */
 package org.gw2InfoViewer.services.json;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -31,7 +33,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.gw2InfoViewer.maps.IdNamePair;
-import org.gw2InfoViewer.maps.NameMap;
+import org.gw2InfoViewer.maps.EventNames;
+import org.gw2InfoViewer.maps.MapNames;
+import org.gw2InfoViewer.maps.WorldNames;
 import org.gw2InfoViewer.models.Event;
 import org.gw2InfoViewer.models.EventList;
 import org.gw2InfoViewer.services.json.typeadaptors.EventAdapter;
@@ -51,7 +55,7 @@ public class JsonConversionService {
         this.jsonParser = new JsonParser();
     }
 
-    public static EventList parseEventListJson(String json) {
+    public static EventList parseEventList(String json) {
 
         EventList eventList = gsonBuilder.create().fromJson(json, EventList.class);
 //        EventList eventList = gson.fromJson(json, EventList.class);
@@ -59,7 +63,7 @@ public class JsonConversionService {
         return eventList;
     }
 
-    public static EventList parseEventListJson(InputStream input) throws IOException {
+    public static EventList parseEventList(InputStream input) throws IOException {
         List<Event> events;
 
         events = new ArrayList<Event>();
@@ -75,12 +79,10 @@ public class JsonConversionService {
             reader.endArray();
             reader.endObject();
         }
-
-
         return new EventList(events);
     }
 
-    public static NameMap parseNameMapJson(String json) {
+    public static EventNames parseEventNames(String json) {
         Map<String, String> nameHashMap;
         JsonArray jsonArray;
 
@@ -90,9 +92,38 @@ public class JsonConversionService {
         for (int i = 0; i < jsonArray.size(); i++) {
             IdNamePair namePair;
             namePair = gsonBuilder.create().fromJson(jsonArray.get(i), IdNamePair.class);
-            nameHashMap.put(namePair.getEventId(), namePair.getName());
+            nameHashMap.put(namePair.getId(), namePair.getName());
         }
+        return new EventNames(nameHashMap);
+    }
 
-        return new NameMap(nameHashMap);
+    public static MapNames parseMapNames(String json) {
+        BiMap<Integer, String> nameHashBiMap;
+        JsonArray jsonArray;
+
+        nameHashBiMap = HashBiMap.create();
+        jsonArray = new JsonParser().parse(json).getAsJsonArray();
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            IdNamePair namePair;
+            namePair = gsonBuilder.create().fromJson(jsonArray.get(i), IdNamePair.class);
+            nameHashBiMap.put(Integer.parseInt(namePair.getId()), namePair.getName());
+        }
+        return new MapNames(nameHashBiMap);
+    }
+    
+       public static WorldNames parseWorldNames(String json) {
+        BiMap<Integer, String> nameHashBiMap;
+        JsonArray jsonArray;
+
+        nameHashBiMap = HashBiMap.create();
+        jsonArray = new JsonParser().parse(json).getAsJsonArray();
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            IdNamePair namePair;
+            namePair = gsonBuilder.create().fromJson(jsonArray.get(i), IdNamePair.class);
+            nameHashBiMap.put(Integer.parseInt(namePair.getId()), namePair.getName());
+        }
+        return new WorldNames(nameHashBiMap);
     }
 }
