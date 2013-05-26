@@ -38,18 +38,31 @@ public class OptionsForm extends javax.swing.JDialog {
         DefaultComboBoxModel worldComboBoxModel = new DefaultComboBoxModel();
         DefaultComboBoxModel mapComboBoxModel = new DefaultComboBoxModel();
 
-        for (Iterator<String> it = worldNames.getMap().values().iterator(); it.hasNext();) {
-            worldComboBoxModel.addElement(it.next());
-        }
+        mapComboBoxModel.addElement("None");
+        worldComboBoxModel.addElement("None");
+
         for (Iterator<String> it = mapNames.getMap().values().iterator(); it.hasNext();) {
             mapComboBoxModel.addElement(it.next());
         }
+        for (Iterator<String> it = worldNames.getMap().values().iterator(); it.hasNext();) {
+            worldComboBoxModel.addElement(it.next());
+        }
 
-        worldComboBox.setModel(worldComboBoxModel);
         mapComboBox.setModel(mapComboBoxModel);
+        worldComboBox.setModel(worldComboBoxModel);
 
-        worldComboBox.setSelectedItem(worldNames.getMap().get(options.getCurrentWorld()));
-        mapComboBox.setSelectedItem(mapNames.getMap().get(options.getCurrentMap()));
+        if (options.getCurrentMap() != 0) {
+            mapComboBox.setSelectedItem(mapNames.getMap().get(options.getCurrentMap()));
+        } else {
+            mapComboBox.setSelectedItem("None");
+        }
+
+        if (options.getCurrentWorld() != 0) {
+            worldComboBox.setSelectedItem(worldNames.getMap().get(options.getCurrentWorld()));
+        } else {
+            worldComboBox.setSelectedItem("None");
+        }
+
         eventIdText.setText(options.getCurrentEventId());
         matchIdText.setText(options.getCurrentMatchId().toString());
         proxyEnabledCheckbox.setSelected(options.isProxyEnabled());
@@ -60,8 +73,18 @@ public class OptionsForm extends javax.swing.JDialog {
     public Options getOptions() {
         Options options = new Options();
 
-        options.setCurrentWorld(worldNames.getMap().inverse().get(worldComboBox.getSelectedItem()));
-        options.setCurrentMap(mapNames.getMap().inverse().get(mapComboBox.getSelectedItem()));
+        if (mapComboBox.getSelectedItem().toString() == "None") {
+            options.setCurrentMap(0);
+        } else {
+            options.setCurrentMap(mapNames.getMap().inverse().get(mapComboBox.getSelectedItem()));
+        }
+
+        if (worldComboBox.getSelectedItem().toString() == "None") {
+            options.setCurrentMap(0);
+        } else {
+            options.setCurrentWorld(worldNames.getMap().inverse().get(worldComboBox.getSelectedItem()));
+        }
+
         options.setCurrentEventId(eventIdText.getText());
         options.setCurrentMatchId(Integer.parseInt(matchIdText.getText()));
         options.setProxyEnabled(proxyEnabledCheckbox.isSelected());
@@ -78,6 +101,7 @@ public class OptionsForm extends javax.swing.JDialog {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         worldComboBox = new javax.swing.JComboBox();
         proxyEnabledCheckbox = new javax.swing.JCheckBox();
@@ -117,22 +141,21 @@ public class OptionsForm extends javax.swing.JDialog {
         proxyAddressLabel.setText("Address:");
 
         proxyPortText.setText("Loading...");
-        proxyPortText.setEnabled(proxyEnabledCheckbox.isEnabled());
         proxyPortText.setPreferredSize(new java.awt.Dimension(60, 20));
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, proxyEnabledCheckbox, org.jdesktop.beansbinding.ELProperty.create("${selected}"), proxyPortText, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
 
         proxyLabelAddress.setText("Port:");
 
         proxyAddressText.setText("Loading...");
-        proxyAddressText.setEnabled(proxyEnabledCheckbox.isEnabled());
         proxyAddressText.setPreferredSize(new java.awt.Dimension(200, 20));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, proxyEnabledCheckbox, org.jdesktop.beansbinding.ELProperty.create("${selected}"), proxyAddressText, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
 
         matchIdText.setText("Loading...");
         matchIdText.setPreferredSize(new java.awt.Dimension(60, 20));
-        matchIdText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                matchIdTextActionPerformed(evt);
-            }
-        });
 
         mapComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Loading..." }));
         mapComboBox.setPreferredSize(new java.awt.Dimension(200, 20));
@@ -199,12 +222,10 @@ public class OptionsForm extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void matchIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matchIdTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_matchIdTextActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel eventIdLabel;
     private javax.swing.JTextField eventIdText;
@@ -219,5 +240,6 @@ public class OptionsForm extends javax.swing.JDialog {
     private javax.swing.JTextField proxyPortText;
     private javax.swing.JComboBox worldComboBox;
     private javax.swing.JLabel worldLabel;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
