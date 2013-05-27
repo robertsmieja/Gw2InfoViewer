@@ -21,11 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.gw2InfoViewer.views.MainView;
 import org.gw2InfoViewer.factories.HttpsConnectionFactory;
-import org.gw2InfoViewer.models.Event;
 import org.gw2InfoViewer.models.EventList;
 import org.gw2InfoViewer.maps.EventNames;
 import org.gw2InfoViewer.maps.MapNames;
@@ -62,12 +62,13 @@ public class MainController {
         EventNames eventNames;
         WorldNames worldNames;
         MapNames mapNames;
+        Options options = new Options();
 
-        view = new MainView(this, new Options());
+        view = new MainView(this, options);
         try {
-            eventNames = getEventNames();
-            mapNames = getMapNames();
-            worldNames = getWorldNames();
+            eventNames = getEventNames(options);
+            mapNames = getMapNames(options);
+            worldNames = getWorldNames(options);
 
             eventList = getEventList(eventNames, mapNames, worldNames, new Options());
 
@@ -101,7 +102,12 @@ public class MainController {
         HttpGet getEvents;
 
         getEvents = new HttpGet(eventsUrl);
-        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        
+        if (options.isProxyEnabled()) {
+            httpClient = HttpsConnectionFactory.getHttpsClientWithProxy(StartComRootCertificate, options.getProxyAddress(), options.getProxyPort());
+        } else {
+            httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        }
         InputStream json = httpClient.execute(getEvents).getEntity().getContent();
         eventList = JsonConversionService.parseEventList(json, eventNames, mapNames, worldNames);
         httpClient.getConnectionManager().shutdown();
@@ -120,53 +126,73 @@ public class MainController {
         HttpGet getEvents;
 
         getEvents = new HttpGet(eventsUrl);
-        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+
+        if (options.isProxyEnabled()) {
+            httpClient = HttpsConnectionFactory.getHttpsClientWithProxy(StartComRootCertificate, options.getProxyAddress(), options.getProxyPort());
+        } else {
+            httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        }
         eventList = JsonConversionService.parseEventListWithoutNames(httpClient.execute(getEvents).getEntity().getContent());
         httpClient.getConnectionManager().shutdown();
 
         return eventList;
     }
 
-    public static EventNames getEventNames() throws IOException {
+    public static EventNames getEventNames(Options options) throws IOException {
         String eventNamesUrl = API_BASE_URL + API_VERSION + API_EVENT_NAMES;
         EventNames eventNames;
         HttpClient httpClient;
         HttpGet getEventNames;
         String eventNamesJson;
+        
         getEventNames = new HttpGet(eventNamesUrl);
 
-        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        if (options.isProxyEnabled()) {
+            httpClient = HttpsConnectionFactory.getHttpsClientWithProxy(StartComRootCertificate, options.getProxyAddress(), options.getProxyPort());
+        } else {
+            httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        }
         eventNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getEventNames));
         eventNames = JsonConversionService.parseEventNames(eventNamesJson);
         httpClient.getConnectionManager().shutdown();
         return eventNames;
     }
 
-    public static WorldNames getWorldNames() throws IOException {
+    public static WorldNames getWorldNames(Options options) throws IOException {
         String eventNamesUrl = API_BASE_URL + API_VERSION + API_WORLD_NAMES;
         WorldNames worldNames;
         HttpClient httpClient;
-        HttpGet getEventNames;
+        HttpGet getWorldNames;
         String worldNamesJson;
-        getEventNames = new HttpGet(eventNamesUrl);
+        
+        getWorldNames = new HttpGet(eventNamesUrl);
 
-        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
-        worldNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getEventNames));
+        if (options.isProxyEnabled()) {
+            httpClient = HttpsConnectionFactory.getHttpsClientWithProxy(StartComRootCertificate, options.getProxyAddress(), options.getProxyPort());
+        } else {
+            httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        }
+        worldNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getWorldNames));
         worldNames = JsonConversionService.parseWorldNames(worldNamesJson);
         httpClient.getConnectionManager().shutdown();
         return worldNames;
     }
 
-    public static MapNames getMapNames() throws IOException {
+    public static MapNames getMapNames(Options options) throws IOException {
         String eventNamesUrl = API_BASE_URL + API_VERSION + API_MAP_NAMES;
         MapNames mapNames;
         HttpClient httpClient;
-        HttpGet getEventNames;
+        HttpGet getMapNames;
         String mapNamesJson;
-        getEventNames = new HttpGet(eventNamesUrl);
+        
+        getMapNames = new HttpGet(eventNamesUrl);
 
-        httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
-        mapNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getEventNames));
+        if (options.isProxyEnabled()) {
+            httpClient = HttpsConnectionFactory.getHttpsClientWithProxy(StartComRootCertificate, options.getProxyAddress(), options.getProxyPort());
+        } else {
+            httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
+        }
+        mapNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getMapNames));
         mapNames = JsonConversionService.parseMapNames(mapNamesJson);
         httpClient.getConnectionManager().shutdown();
         return mapNames;

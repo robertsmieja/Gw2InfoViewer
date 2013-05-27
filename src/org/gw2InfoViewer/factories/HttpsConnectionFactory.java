@@ -37,8 +37,10 @@ import java.util.logging.Logger;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -50,16 +52,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class HttpsConnectionFactory {
 
-    private static HttpsConnectionFactory instance = null;
-
     private HttpsConnectionFactory() {
-    }
-
-    public static HttpsConnectionFactory getInstance() {
-        if (instance == null) {
-            instance = new HttpsConnectionFactory();
-        }
-        return instance;
     }
 
     public static Certificate[] convertByteArrayToCertificate(byte[] sslCertificate) throws CertificateException {
@@ -129,6 +122,73 @@ public class HttpsConnectionFactory {
             SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
             Scheme sch = new Scheme("https", 443, socketFactory);
 
+            httpClient.getConnectionManager().getSchemeRegistry().register(sch);
+        } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
+            Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return httpClient;
+    }
+
+    public static HttpClient getHttpsClientWithProxy(byte[] sslCertificateBytes, String proxyAddress, int proxyPort) {
+        DefaultHttpClient httpClient;
+        Certificate[] sslCertificate;
+        HttpHost proxy;
+
+        httpClient = new DefaultHttpClient();
+        try {
+            sslCertificate = convertByteArrayToCertificate(sslCertificateBytes);
+
+            TrustManagerFactory tf = TrustManagerFactory.getInstance("X509");
+            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            ks.load(null);
+            for (int i = 0; i < sslCertificate.length; i++) {
+                ks.setCertificateEntry("StartCom" + i, sslCertificate[i]);
+            }
+
+            tf.init(ks);
+            TrustManager[] tm = tf.getTrustManagers();
+
+            SSLContext sslCon = SSLContext.getInstance("SSL");
+            sslCon.init(null, tm, new SecureRandom());
+            SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
+            Scheme sch = new Scheme("https", 443, socketFactory);
+
+            proxy = new HttpHost(proxyAddress, proxyPort, "https");
+            httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+            
+            httpClient.getConnectionManager().getSchemeRegistry().register(sch);
+        } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
+            Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return httpClient;
+    }
+    
+        public static HttpClient getHttpsClientWithProxy(Certificate[] sslCertificate, String proxyAddress, int proxyPort) {
+        DefaultHttpClient httpClient;
+        HttpHost proxy;
+
+        httpClient = new DefaultHttpClient();
+        try {
+            TrustManagerFactory tf = TrustManagerFactory.getInstance("X509");
+            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            ks.load(null);
+            for (int i = 0; i < sslCertificate.length; i++) {
+                ks.setCertificateEntry("StartCom" + i, sslCertificate[i]);
+            }
+
+            tf.init(ks);
+            TrustManager[] tm = tf.getTrustManagers();
+
+            SSLContext sslCon = SSLContext.getInstance("SSL");
+            sslCon.init(null, tm, new SecureRandom());
+            SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
+            Scheme sch = new Scheme("https", 443, socketFactory);
+
+            proxy = new HttpHost(proxyAddress, proxyPort, "https");
+            httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+            
             httpClient.getConnectionManager().getSchemeRegistry().register(sch);
         } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException | KeyManagementException | UnrecoverableKeyException ex) {
             Logger.getLogger(HttpsConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
