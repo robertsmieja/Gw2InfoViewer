@@ -19,15 +19,17 @@ public class OptionsForm extends javax.swing.JDialog {
 
     private WorldNames worldNames;
     private MapNames mapNames;
+    private MainView parent;
 
     /**
      * Creates new form OptionsForm
      */
-    public OptionsForm(java.awt.Frame parent, boolean modal, Options options, WorldNames worldNames, MapNames mapNames) {
+    public OptionsForm(MainView parent, boolean modal, Options options, WorldNames worldNames, MapNames mapNames) {
         super(parent, modal);
 
         this.worldNames = worldNames;
         this.mapNames = mapNames;
+        this.parent = parent;
 
         initComponents();
 
@@ -118,6 +120,11 @@ public class OptionsForm extends javax.swing.JDialog {
         mapComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         worldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Loading..." }));
         worldComboBox.setPreferredSize(new java.awt.Dimension(150, 20));
@@ -226,6 +233,10 @@ public class OptionsForm extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        parent.setOptions(getOptions());
+    }//GEN-LAST:event_formWindowClosing
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel eventIdLabel;
     private javax.swing.JTextField eventIdText;
