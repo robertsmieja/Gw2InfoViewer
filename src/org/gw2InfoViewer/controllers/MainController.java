@@ -91,7 +91,11 @@ public class MainController {
     }
 
     public static EventList getEventList(EventNames eventNames, MapNames mapNames, WorldNames worldNames, Options options) throws IOException {
-        String eventsUrl = API_BASE_URL + API_VERSION + API_EVENTS + "?world_id=" + options.getCurrentWorld();
+        String eventsUrl = API_BASE_URL + API_VERSION + API_EVENTS;
+        eventsUrl += "?world_id=" + options.getCurrentWorld();
+        eventsUrl += "&map_id=" + options.getCurrentMap();
+        eventsUrl += "&event_id=" + options.getCurrentEventId();
+
         EventList eventList;
         HttpClient httpClient;
         HttpGet getEvents;
@@ -106,7 +110,11 @@ public class MainController {
     }
 
     public static EventList getEventListWithoutNames(Options options) throws IOException {
-        String eventsUrl = API_BASE_URL + API_VERSION + API_EVENTS + "?world_id=" + options.getCurrentWorld();
+        String eventsUrl = API_BASE_URL + API_VERSION + API_EVENTS;
+        eventsUrl += "?world_id=" + options.getCurrentWorld();
+        eventsUrl += "&map_id=" + options.getCurrentMap();
+        eventsUrl += "&event_id=" + options.getCurrentEventId();
+
         EventList eventList;
         HttpClient httpClient;
         HttpGet getEvents;

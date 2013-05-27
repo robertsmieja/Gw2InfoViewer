@@ -38,7 +38,7 @@ public class Options {
         this.currentWorld = currentWorld;
     }
 
-    public int getCurrentMap() {
+    public Integer getCurrentMap() {
         return currentMap;
     }
 
