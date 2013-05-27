@@ -126,6 +126,7 @@ public class OptionsForm extends javax.swing.JDialog {
             }
         });
 
+        worldComboBox.setMaximumRowCount(15);
         worldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Loading..." }));
         worldComboBox.setPreferredSize(new java.awt.Dimension(150, 20));
 
@@ -164,6 +165,7 @@ public class OptionsForm extends javax.swing.JDialog {
         matchIdText.setText("Loading...");
         matchIdText.setPreferredSize(new java.awt.Dimension(60, 20));
 
+        mapComboBox.setMaximumRowCount(15);
         mapComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Loading..." }));
         mapComboBox.setPreferredSize(new java.awt.Dimension(200, 20));
 

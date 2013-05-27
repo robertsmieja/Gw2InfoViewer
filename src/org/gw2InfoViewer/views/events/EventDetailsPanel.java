@@ -75,12 +75,14 @@ public class EventDetailsPanel extends javax.swing.JPanel {
         stateLabel = new javax.swing.JLabel();
         stateText = new javax.swing.JTextField();
 
+        setPreferredSize(new java.awt.Dimension(350, 198));
+
         eventNameLabel.setText("Event Name:");
 
         eventNameText.setEditable(false);
         eventNameText.setText("Loading Event Name...");
-        eventNameText.setMinimumSize(new java.awt.Dimension(250, 20));
-        eventNameText.setPreferredSize(new java.awt.Dimension(150, 20));
+        eventNameText.setMinimumSize(new java.awt.Dimension(300, 20));
+        eventNameText.setPreferredSize(new java.awt.Dimension(300, 20));
         eventNameText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eventNameTextActionPerformed(evt);
