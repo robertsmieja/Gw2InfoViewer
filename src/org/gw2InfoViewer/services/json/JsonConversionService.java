@@ -55,14 +55,6 @@ public class JsonConversionService {
         this.jsonParser = new JsonParser();
     }
 
-    @Deprecated
-    public static EventList parseEventList(String json) {
-
-        EventList eventList = gsonBuilder.create().fromJson(json, EventList.class);
-
-        return eventList;
-    }
-
     public static EventList parseEventList(InputStream json, EventNames eventNames, MapNames mapNames, WorldNames worldNames) throws IOException {
         EventList eventList;
 

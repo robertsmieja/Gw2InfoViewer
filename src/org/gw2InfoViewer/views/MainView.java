@@ -19,6 +19,9 @@ package org.gw2InfoViewer.views;
 
 import org.gw2InfoViewer.maps.EventNames;
 import java.awt.EventQueue;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import org.gw2InfoViewer.controllers.MainController;
 import org.gw2InfoViewer.maps.MapNames;
@@ -68,7 +71,7 @@ public class MainView extends javax.swing.JFrame {
         this.options = options;
     }
 
-    public void setEventsListModel(EventList eventList) {
+    public void setEventList(EventList eventList) {
         DefaultListModel<Event> listModel;
 
         listModel = new DefaultListModel<Event>();
@@ -82,7 +85,7 @@ public class MainView extends javax.swing.JFrame {
         this.eventList = eventList;
     }
 
-    public EventList getEventsListModel() {
+    public EventList getEventList() {
         return eventList;
     }
 
@@ -116,6 +119,12 @@ public class MainView extends javax.swing.JFrame {
 
     public void setOptions(Options options) {
         this.options = options;
+        try {
+            EventList eventList = MainController.getEventList(this.eventNames, this.mapNames, this.worldNames, this.options);
+            this.setEventList(eventList);
+        } catch (IOException ex) {
+            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -244,7 +253,7 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void refreshMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMenuMouseClicked
-        setEventsListModel(eventList);
+        setEventList(eventList);
         refreshMenu.setSelected(false);
     }//GEN-LAST:event_refreshMenuMouseClicked
 
