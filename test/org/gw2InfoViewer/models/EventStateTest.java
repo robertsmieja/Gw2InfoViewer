@@ -45,7 +45,7 @@ public class EventStateTest {
             EventState.Success,
             EventState.Fail,
             EventState.Warmup,
-            EventState.Preperation,
+            EventState.Preparation,
             EventState.Invalid
         };
 
