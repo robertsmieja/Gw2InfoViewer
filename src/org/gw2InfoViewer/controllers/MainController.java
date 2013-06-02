@@ -17,11 +17,11 @@
  */
 package org.gw2InfoViewer.controllers;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.gw2InfoViewer.views.MainView;
@@ -32,6 +32,7 @@ import org.gw2InfoViewer.maps.MapNames;
 import org.gw2InfoViewer.maps.WorldNames;
 import org.gw2InfoViewer.models.Options;
 import org.gw2InfoViewer.services.json.JsonConversionService;
+import org.gw2InfoViewer.services.settings.SettingsService;
 
 /**
  *
@@ -62,7 +63,20 @@ public class MainController {
         EventNames eventNames;
         WorldNames worldNames;
         MapNames mapNames;
-        Options options = new Options();
+        Options options = null;
+        try {
+            options = SettingsService.LoadSettings();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            System.out.println("Error loading settings!");
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (options == null) {
+            System.out.println("Settings not found, using defaults.");
+            options = new Options();
+        }
 
         view = new MainView(this, options);
         try {
@@ -102,7 +116,7 @@ public class MainController {
         HttpGet getEvents;
 
         getEvents = new HttpGet(eventsUrl);
-        
+
         if (options.isProxyEnabled()) {
             httpClient = HttpsConnectionFactory.getHttpsClientWithProxy(StartComRootCertificate, options.getProxyAddress(), options.getProxyPort());
         } else {
@@ -144,7 +158,7 @@ public class MainController {
         HttpClient httpClient;
         HttpGet getEventNames;
         String eventNamesJson;
-        
+
         getEventNames = new HttpGet(eventNamesUrl);
 
         if (options.isProxyEnabled()) {
@@ -164,7 +178,7 @@ public class MainController {
         HttpClient httpClient;
         HttpGet getWorldNames;
         String worldNamesJson;
-        
+
         getWorldNames = new HttpGet(eventNamesUrl);
 
         if (options.isProxyEnabled()) {
@@ -184,7 +198,7 @@ public class MainController {
         HttpClient httpClient;
         HttpGet getMapNames;
         String mapNamesJson;
-        
+
         getMapNames = new HttpGet(eventNamesUrl);
 
         if (options.isProxyEnabled()) {
@@ -196,5 +210,14 @@ public class MainController {
         mapNames = JsonConversionService.parseMapNames(mapNamesJson);
         httpClient.getConnectionManager().shutdown();
         return mapNames;
+    }
+
+    public void close(Options options) {
+        try {
+            SettingsService.SaveSettings(options);
+        } catch (IOException ex) {
+            System.out.println("Error saving settings!");
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

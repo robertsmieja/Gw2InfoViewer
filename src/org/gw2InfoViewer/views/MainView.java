@@ -150,6 +150,11 @@ public class MainView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Guild Wars 2 - Info Viewer");
         setIconImages(null);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         eventSplitPane.setResizeWeight(0.75);
         eventSplitPane.setContinuousLayout(true);
@@ -294,6 +299,11 @@ public class MainView extends javax.swing.JFrame {
             this.eventDetailsPanel.setEvent(event);
         }
     }//GEN-LAST:event_eventNameListValueChanged
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        controller.close(options);
+    }//GEN-LAST:event_formWindowClosed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu editMenu;
     private org.gw2InfoViewer.views.events.EventDetailsPanel eventDetailsPanel;
