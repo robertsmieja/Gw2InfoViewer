@@ -30,35 +30,35 @@ public class Options {
 //        this.proxyProtocol = "";
     }
 
-    public Integer getCurrentWorld() {
+    public Integer getWorld() {
         return currentWorld;
     }
 
-    public void setCurrentWorld(Integer currentWorld) {
+    public void setWorld(Integer currentWorld) {
         this.currentWorld = currentWorld;
     }
 
-    public Integer getCurrentMap() {
+    public Integer getMap() {
         return currentMap;
     }
 
-    public void setCurrentMap(Integer currentMap) {
+    public void setMap(Integer currentMap) {
         this.currentMap = currentMap;
     }
 
-    public String getCurrentEventId() {
+    public String getEventId() {
         return currentEventId;
     }
 
-    public void setCurrentEventId(String eventId) {
+    public void setEventId(String eventId) {
         this.currentEventId = eventId;
     }
 
-    public Integer getCurrentMatchId() {
+    public Integer getMatchId() {
         return currentMatchId;
     }
 
-    public void setCurrentMatchId(Integer currentMatchId) {
+    public void setMatchId(Integer currentMatchId) {
         this.currentMatchId = currentMatchId;
     }
 

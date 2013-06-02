@@ -53,20 +53,20 @@ public class OptionsForm extends javax.swing.JDialog {
         mapComboBox.setModel(mapComboBoxModel);
         worldComboBox.setModel(worldComboBoxModel);
 
-        if (options.getCurrentMap() != 0) {
-            mapComboBox.setSelectedItem(mapNames.getMap().get(options.getCurrentMap()));
+        if (options.getMap() != 0) {
+            mapComboBox.setSelectedItem(mapNames.getMap().get(options.getMap()));
         } else {
             mapComboBox.setSelectedItem("None");
         }
 
-        if (options.getCurrentWorld() != 0) {
-            worldComboBox.setSelectedItem(worldNames.getMap().get(options.getCurrentWorld()));
+        if (options.getWorld() != 0) {
+            worldComboBox.setSelectedItem(worldNames.getMap().get(options.getWorld()));
         } else {
             worldComboBox.setSelectedItem("None");
         }
 
-        eventIdText.setText(options.getCurrentEventId());
-        matchIdText.setText(options.getCurrentMatchId().toString());
+        eventIdText.setText(options.getEventId());
+        matchIdText.setText(options.getMatchId().toString());
         proxyEnabledCheckbox.setSelected(options.isProxyEnabled());
         proxyAddressText.setText(options.getProxyAddress());
         proxyPortText.setText(options.getProxyPort().toString());
@@ -76,19 +76,19 @@ public class OptionsForm extends javax.swing.JDialog {
         Options options = new Options();
 
         if (mapComboBox.getSelectedItem().toString() == "None") {
-            options.setCurrentMap(0);
+            options.setMap(0);
         } else {
-            options.setCurrentMap(mapNames.getMap().inverse().get(mapComboBox.getSelectedItem()));
+            options.setMap(mapNames.getMap().inverse().get(mapComboBox.getSelectedItem()));
         }
 
         if (worldComboBox.getSelectedItem().toString() == "None") {
-            options.setCurrentMap(0);
+            options.setMap(0);
         } else {
-            options.setCurrentWorld(worldNames.getMap().inverse().get(worldComboBox.getSelectedItem()));
+            options.setWorld(worldNames.getMap().inverse().get(worldComboBox.getSelectedItem()));
         }
 
-        options.setCurrentEventId(eventIdText.getText());
-        options.setCurrentMatchId(Integer.parseInt(matchIdText.getText()));
+        options.setEventId(eventIdText.getText());
+        options.setMatchId(Integer.parseInt(matchIdText.getText()));
         options.setProxyEnabled(proxyEnabledCheckbox.isSelected());
         options.setProxyAddress(proxyAddressText.getText());
         options.setProxyPort(Integer.parseInt(proxyPortText.getText()));
