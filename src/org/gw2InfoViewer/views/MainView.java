@@ -119,6 +119,7 @@ public class MainView extends javax.swing.JFrame {
 
     public void setOptions(Options options) {
         this.options = options;
+        
         try {
             EventList eventList = MainController.getEventList(this.eventNames, this.mapNames, this.worldNames, this.options);
             this.setEventList(eventList);
@@ -153,6 +154,9 @@ public class MainView extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -301,9 +305,11 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_eventNameListValueChanged
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        controller.close(options);
     }//GEN-LAST:event_formWindowClosed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        controller.close(options);
+    }//GEN-LAST:event_formWindowClosing
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu editMenu;
     private org.gw2InfoViewer.views.events.EventDetailsPanel eventDetailsPanel;

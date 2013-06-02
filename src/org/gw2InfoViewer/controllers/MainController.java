@@ -64,6 +64,7 @@ public class MainController {
         WorldNames worldNames;
         MapNames mapNames;
         Options options = null;
+        
         try {
             options = SettingsService.LoadSettings();
         } catch (FileNotFoundException ex) {
@@ -84,8 +85,7 @@ public class MainController {
             mapNames = getMapNames(options);
             worldNames = getWorldNames(options);
 
-            eventList = getEventList(eventNames, mapNames, worldNames, new Options());
-
+            eventList = getEventList(eventNames, mapNames, worldNames, options);
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -122,6 +122,7 @@ public class MainController {
         } else {
             httpClient = HttpsConnectionFactory.getHttpsClient(StartComRootCertificate);
         }
+        
         InputStream json = httpClient.execute(getEvents).getEntity().getContent();
         eventList = JsonConversionService.parseEventList(json, eventNames, mapNames, worldNames);
         httpClient.getConnectionManager().shutdown();
