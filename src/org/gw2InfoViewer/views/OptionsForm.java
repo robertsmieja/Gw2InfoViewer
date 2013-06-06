@@ -4,7 +4,11 @@
  */
 package org.gw2InfoViewer.views;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import org.gw2InfoViewer.maps.MapNames;
@@ -43,13 +47,22 @@ public class OptionsForm extends javax.swing.JDialog {
         mapComboBoxModel.addElement("None");
         worldComboBoxModel.addElement("None");
 
-        for (Iterator<String> it = mapNames.getMap().values().iterator(); it.hasNext();) {
+        List<String> sortedMapNames = new ArrayList<String>();
+        sortedMapNames.addAll(worldNames.getMap().values());
+        Collections.sort(sortedMapNames);
+        
+        for (Iterator<String> it = sortedMapNames.iterator(); it.hasNext();) {
             mapComboBoxModel.addElement(it.next());
         }
-        for (Iterator<String> it = worldNames.getMap().values().iterator(); it.hasNext();) {
+        
+        List<String> sortedWorldNames = new ArrayList<String>();
+        sortedWorldNames.addAll(worldNames.getMap().values());
+        Collections.sort(sortedWorldNames);
+        
+        for (Iterator<String> it = sortedWorldNames.iterator(); it.hasNext();) {
             worldComboBoxModel.addElement(it.next());
         }
-
+        
         mapComboBox.setModel(mapComboBoxModel);
         worldComboBox.setModel(worldComboBoxModel);
 
