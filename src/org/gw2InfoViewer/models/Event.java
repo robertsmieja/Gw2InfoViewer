@@ -23,7 +23,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author Robert Smieja
  */
-public class Event {
+public class Event implements Comparable<Event> {
 
     private String eventName;
     @SerializedName("event_id")
@@ -41,7 +41,7 @@ public class Event {
         this("N/A", 0, 0, null, null);
     }
 
-    public Event(String eventName, int worldId, int mapId, String eventId, EventState state) {
+    public Event(String eventName, int worldId, int mapId, String eventId, EventState state)  {
         this.eventName = eventName;
         this.worldId = worldId;
         this.mapId = mapId;
@@ -108,5 +108,10 @@ public class Event {
     @Override
     public String toString() {
         return eventName;
+    }
+
+    @Override
+    public int compareTo(Event event) {
+        return toString().compareTo(event.toString());
     }
 }

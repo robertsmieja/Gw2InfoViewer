@@ -20,6 +20,9 @@ package org.gw2InfoViewer.controllers;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.HttpClient;
@@ -127,6 +130,8 @@ public class MainController {
         eventList = JsonConversionService.parseEventList(json, eventNames, mapNames, worldNames);
         httpClient.getConnectionManager().shutdown();
 
+        Collections.sort(eventList.getEventList());
+        
         return eventList;
     }
 
@@ -209,7 +214,7 @@ public class MainController {
         }
         mapNamesJson = HttpsConnectionFactory.getStringFromHttpResponse(httpClient.execute(getMapNames));
         mapNames = JsonConversionService.parseMapNames(mapNamesJson);
-        httpClient.getConnectionManager().shutdown();
+        httpClient.getConnectionManager().shutdown();       
         return mapNames;
     }
 
